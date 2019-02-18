@@ -1,3 +1,4 @@
+// License: Apache 2.0. See LICENSE file in root directory.
 package rapid.net.skalar;
 
 import org.junit.runner.RunWith;
