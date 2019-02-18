@@ -1,0 +1,370 @@
+
+*******************************************************************************
+Below this line is the copy of the ChangeLog before making it OpenSource on github
+(from the author's private Subversion server)
+
+------------------------------------------------------------------------
+r104 | dev | 2019-02-14 21:19:42 +0100 (Do., 14. Feb 2019) | 1 Zeile
+
+Started implementing FuzzyPort
+------------------------------------------------------------------------
+r103 | dev | 2018-08-25 21:41:48 +0200 (Sa., 25. Aug 2018) | 1 Zeile
+
+moved skalar regression-tests to own package rapid.net.skalar
+------------------------------------------------------------------------
+r102 | dev | 2018-08-25 21:34:27 +0200 (Sa., 25. Aug 2018) | 1 Zeile
+
+avoid generation of "dead" AND-Gates without inputs
+------------------------------------------------------------------------
+r101 | dev | 2018-08-25 21:11:15 +0200 (Sa., 25. Aug 2018) | 2 Zeilen
+
+added MUL-Gate (an AND-Gate without value normalisation) .. for future use.
+prepared 0.0f comparations to support negative values ... for using in Fuzzy Subtraction
+------------------------------------------------------------------------
+r100 | dev | 2018-08-25 21:00:28 +0200 (Sa., 25. Aug 2018) | 2 Zeilen
+
+added ADD-Gate (an OR-Gate without value normalisation)
+extended FuzzyPort add-Tests
+------------------------------------------------------------------------
+r99 | dev | 2018-08-25 15:27:15 +0200 (Sa., 25. Aug 2018) | 3 Zeilen
+
+removed FuzzyPort invGate
+ATTENTION: general rule is to treat NO_VALUE as 0-values when explicitly asked from output-port
+IN PROGRESS: work for addTest not finished yet
+------------------------------------------------------------------------
+r98 | dev | 2018-08-25 12:12:39 +0200 (Sa., 25. Aug 2018) | 2 Zeilen
+
+support fuzzy-to-fuzzy assignment on different fuzzy values
+ATTENTION: currently the characteristics(curve) shifts it's peak point with the learning-value - this behavior is questionable (a TODO at the moment)
+------------------------------------------------------------------------
+r97 | dev | 2018-08-25 09:01:30 +0200 (Sa., 25. Aug 2018) | 1 Zeile
+
+assign input fuzzy to output fuzzy
+------------------------------------------------------------------------
+r96 | dev | 2018-08-21 22:19:26 +0200 (Di., 21. Aug 2018) | 1 Zeile
+
+made linear-test-pattern generation generic available in TestBase
+------------------------------------------------------------------------
+r95 | dev | 2018-08-21 15:54:55 +0200 (Di., 21. Aug 2018) | 4 Zeilen
+
+edge suports bias-value,
+(limited) support for 0-values on fuzzy-calculations (would not be possible otherwise)
+finished test-cases fro fuzzy-value range determination checks
+
+------------------------------------------------------------------------
+r94 | dev | 2018-08-20 01:08:24 +0200 (Mo., 20. Aug 2018) | 1 Zeile
+
+change AND-Gate function to have a maximum on 1.0f; FuzzyPort: only create output-edges from the gate(s) with the maximum result-value
+------------------------------------------------------------------------
+r93 | dev | 2018-08-20 00:26:34 +0200 (Mo., 20. Aug 2018) | 1 Zeile
+
+moved result-weight of AND-Gate into output-edge weight
+------------------------------------------------------------------------
+r92 | dev | 2018-08-19 16:37:13 +0200 (So., 19. Aug 2018) | 1 Zeile
+
+moved createOutputEdges into Ports
+------------------------------------------------------------------------
+r91 | dev | 2018-08-19 11:13:59 +0200 (So., 19. Aug 2018) | 1 Zeile
+
+prepared FuzzyTest for variable ranges
+------------------------------------------------------------------------
+r90 | dev | 2018-08-19 10:38:11 +0200 (So., 19. Aug 2018) | 1 Zeile
+
+FuzzyPort implemented
+------------------------------------------------------------------------
+r89 | dev | 2018-08-19 10:12:55 +0200 (So., 19. Aug 2018) | 1 Zeile
+
+refactured TestBase to enable more control from derived UnitTests; preparations for FuzzyPort
+------------------------------------------------------------------------
+r88 | dev | 2018-08-14 09:56:28 +0200 (Di., 14. Aug 2018) | 1 Zeile
+
+- implemented sample-handling into PortArray (removed samples in Gate)
+------------------------------------------------------------------------
+r87 | dev | 2018-07-19 15:31:37 +0200 (Do., 19. Jul 2018) | 1 Zeile
+
+renamed *IO to *Port
+------------------------------------------------------------------------
+r86 | dev | 2018-07-19 15:30:32 +0200 (Do., 19. Jul 2018) | 1 Zeile
+
+started transform SamplerIO to PortArray; make PortGroup instancable; implement copyFromPrototype for Portables
+------------------------------------------------------------------------
+r85 | dev | 2018-07-17 16:29:23 +0200 (Di., 17. Jul 2018) | 1 Zeile
+
+finished implementation of samplers
+------------------------------------------------------------------------
+r84 | dev | 2018-07-16 23:51:19 +0200 (Mo., 16. Jul 2018) | 1 Zeile
+
+pending implementation of Comosite-Pattern for inputs and outputs. (current issue is incorrect sampleNr)
+------------------------------------------------------------------------
+r83 | dev | 2018-07-16 21:07:53 +0200 (Mo., 16. Jul 2018) | 1 Zeile
+
+introduced PortFactory to tear out dependency on Port-classes from Network
+------------------------------------------------------------------------
+r82 | dev | 2018-07-15 14:47:39 +0200 (So., 15. Jul 2018) | 1 Zeile
+
+moved Portable-compositie-structure handling and value handling into Portable
+------------------------------------------------------------------------
+r81 | dev | 2018-07-15 13:24:05 +0200 (So., 15. Jul 2018) | 1 Zeile
+
+refactured rapid.net.io into rapod.net.port using the Composite-Pattern
+------------------------------------------------------------------------
+r80 | dev | 2018-07-15 13:24:04 +0200 (So., 15. Jul 2018) | 1 Zeile
+
+refactured rapid.net.io into rapod.net.port using the Composite-Pattern
+------------------------------------------------------------------------
+r79 | dev | 2018-07-14 23:50:08 +0200 (Sa., 14. Jul 2018) | 1 Zeile
+
+Prepared to use SamplerIO as IO-Group
+------------------------------------------------------------------------
+r78 | dev | 2018-07-14 23:23:50 +0200 (Sa., 14. Jul 2018) | 1 Zeile
+
+changed Sampler to edge-clusters in Gate instead of permutation with additional Gates
+------------------------------------------------------------------------
+r77 | dev | 2018-07-13 19:20:16 +0200 (Fr., 13. Jul 2018) | 1 Zeile
+
+added further Boxer-Player
+------------------------------------------------------------------------
+r76 | dev | 2018-07-13 15:08:18 +0200 (Fr., 13. Jul 2018) | 1 Zeile
+
+input setter function offered at Network.setInputValues()
+------------------------------------------------------------------------
+r75 | dev | 2018-07-13 14:06:27 +0200 (Fr., 13. Jul 2018) | 1 Zeile
+
+introduced IOInterface to seperate IO-classes from generic layer
+------------------------------------------------------------------------
+r74 | dev | 2018-07-13 13:25:41 +0200 (Fr., 13. Jul 2018) | 1 Zeile
+
+improved performance in OneHotIO.setValue()
+------------------------------------------------------------------------
+r73 | dev | 2018-07-13 13:07:02 +0200 (Fr., 13. Jul 2018) | 1 Zeile
+
+Introduced MapToOneHotIO, separated Sampler from OneHotIO
+------------------------------------------------------------------------
+r72 | dev | 2018-07-12 07:43:36 +0200 (Do., 12. Jul 2018) | 1 Zeile
+
+Network is automatically controlling SamplerIOs
+------------------------------------------------------------------------
+r71 | dev | 2018-07-11 17:13:19 +0200 (Mi., 11. Jul 2018) | 1 Zeile
+
+introduced SamplerIO
+------------------------------------------------------------------------
+r70 | dev | 2018-07-11 09:12:50 +0200 (Mi., 11. Jul 2018) | 1 Zeile
+
+implemented unit-tests for mutiple-correct results
+------------------------------------------------------------------------
+r69 | dev | 2018-07-11 08:45:48 +0200 (Mi., 11. Jul 2018) | 1 Zeile
+
+implemented support for multiple-correct answers, the results will be equally balanced
+------------------------------------------------------------------------
+r68 | dev | 2018-07-10 20:10:21 +0200 (Di., 10. Jul 2018) | 1 Zeile
+
+estimateValue in OneHotIO
+------------------------------------------------------------------------
+r67 | dev | 2018-07-10 18:41:59 +0200 (Di., 10. Jul 2018) | 1 Zeile
+
+Widmung
+------------------------------------------------------------------------
+r66 | dev | 2018-07-08 20:53:40 +0200 (So., 08. Jul 2018) | 1 Zeile
+
+introduced cycles to measure the interactions with the neural-network: cycles, Gate.creationCycle, Gate.resultCycle. Count hits of Gate during propagation
+------------------------------------------------------------------------
+r65 | dev | 2018-07-08 20:35:57 +0200 (So., 08. Jul 2018) | 1 Zeile
+
+increased performance by not propagating the same gates multiple times
+------------------------------------------------------------------------
+r64 | dev | 2018-07-07 07:32:55 +0200 (Sa., 07. Jul 2018) | 1 Zeile
+
+added query-function in Network
+------------------------------------------------------------------------
+r63 | dev | 2018-07-06 22:13:01 +0200 (Fr., 06. Jul 2018) | 1 Zeile
+
+moved learn and verify directly into Network
+------------------------------------------------------------------------
+r62 | dev | 2018-07-06 21:48:53 +0200 (Fr., 06. Jul 2018) | 1 Zeile
+
+simplified API of Network, started for BoxingGame implementation
+------------------------------------------------------------------------
+r61 | dev | 2018-07-06 15:45:30 +0200 (Fr., 06. Jul 2018) | 1 Zeile
+
+removed obsolete classes AndGate, OrGate
+------------------------------------------------------------------------
+r60 | dev | 2018-07-06 15:42:15 +0200 (Fr., 06. Jul 2018) | 1 Zeile
+
+used functional interfaces in Gate instead of derived classes for AND and OR
+------------------------------------------------------------------------
+r59 | dev | 2018-07-06 14:16:58 +0200 (Fr., 06. Jul 2018) | 1 Zeile
+
+generalized AndGate and OrGate into Gate
+------------------------------------------------------------------------
+r58 | dev | 2018-07-02 22:56:18 +0200 (Mo., 02. Jul 2018) | 2 Zeilen
+
+implemented BinaryIO for output
+ATTENTION: does not work well in separating multiple set bits from non-set bits because of ambiguity in concept fuzzy-values vs. set-bits
+------------------------------------------------------------------------
+r57 | dev | 2018-07-01 11:48:37 +0200 (So., 01. Jul 2018) | 1 Zeile
+
+BinaryIO for input and output
+------------------------------------------------------------------------
+r56 | dev | 2018-07-01 11:36:09 +0200 (So., 01. Jul 2018) | 1 Zeile
+
+merged InputLayer & OutputLayer into OneHotIO
+------------------------------------------------------------------------
+r55 | dev | 2018-07-01 10:07:00 +0200 (So., 01. Jul 2018) | 1 Zeile
+
+merged AssignGate into OrGate
+------------------------------------------------------------------------
+r54 | dev | 2018-07-01 09:13:23 +0200 (So., 01. Jul 2018) | 1 Zeile
+
+seperated the optimizing phase
+------------------------------------------------------------------------
+r53 | dev | 2018-06-29 20:45:29 +0200 (Fr., 29. Jun 2018) | 1 Zeile
+
+Junit-Test cases and Test-Suite for scalar test
+------------------------------------------------------------------------
+r52 | dev | 2018-06-29 06:14:07 +0200 (Fr., 29. Jun 2018) | 1 Zeile
+
+preparations for multi-threaded propagation
+------------------------------------------------------------------------
+r51 | dev | 2018-06-27 21:25:58 +0200 (Mi., 27. Jun 2018) | 1 Zeile
+
+introduced valueId - only propagate from active AssignGates
+------------------------------------------------------------------------
+r50 | dev | 2018-06-27 20:43:08 +0200 (Mi., 27. Jun 2018) | 1 Zeile
+
+Breadth-first propagation
+------------------------------------------------------------------------
+r49 | dev | 2018-06-27 15:16:59 +0200 (Mi., 27. Jun 2018) | 1 Zeile
+
+prepared for push-propagation
+------------------------------------------------------------------------
+r48 | dev | 2018-06-27 15:16:05 +0200 (Mi., 27. Jun 2018) | 1 Zeile
+
+prepared for push-propagation
+------------------------------------------------------------------------
+r47 | dev | 2018-06-27 15:12:58 +0200 (Mi., 27. Jun 2018) | 1 Zeile
+
+removed no more necessary Edge.NONE
+------------------------------------------------------------------------
+r46 | dev | 2018-06-27 10:50:58 +0200 (Mi., 27. Jun 2018) | 1 Zeile
+
+changed AndGate and OrGate function to allow fuzzy-values; removed negated-Bits in BinaryInputLayer
+------------------------------------------------------------------------
+r45 | dev | 2018-06-26 22:05:02 +0200 (Di., 26. Jun 2018) | 1 Zeile
+
+added BinaryInputLayer for integer-numbers represented as Bit-Mask
+------------------------------------------------------------------------
+r44 | dev | 2018-06-26 21:12:01 +0200 (Di., 26. Jun 2018) | 1 Zeile
+
+prepared general approach for learning with different InputLayers
+------------------------------------------------------------------------
+r43 | dev | 2018-06-26 20:33:17 +0200 (Di., 26. Jun 2018) | 1 Zeile
+
+trace total-number of gates
+------------------------------------------------------------------------
+r42 | dev | 2018-06-26 08:24:59 +0200 (Di., 26. Jun 2018) | 1 Zeile
+
+enhanced BitCounter-Test
+------------------------------------------------------------------------
+r41 | dev | 2018-06-26 08:06:20 +0200 (Di., 26. Jun 2018) | 1 Zeile
+
+prepared for unit-tests
+------------------------------------------------------------------------
+r40 | dev | 2018-06-25 18:18:59 +0200 (Mo., 25. Jun 2018) | 1 Zeile
+
+finished duplication-optimation; introduced fuzzy values and edge-weights
+------------------------------------------------------------------------
+r39 | dev | 2018-06-24 23:40:48 +0200 (So., 24. Jun 2018) | 1 Zeile
+
+continued finding permutations
+------------------------------------------------------------------------
+r38 | dev | 2018-06-23 18:01:12 +0200 (Sa., 23. Jun 2018) | 1 Zeile
+
+Visitor is now used as instance
+------------------------------------------------------------------------
+r37 | dev | 2018-06-23 17:47:40 +0200 (Sa., 23. Jun 2018) | 1 Zeile
+
+Gates now have a parent-reference to the owning layer
+------------------------------------------------------------------------
+r36 | dev | 2018-06-22 22:08:21 +0200 (Fr., 22. Jun 2018) | 1 Zeile
+
+continued permutation-optimation
+------------------------------------------------------------------------
+r35 | dev | 2018-06-22 21:39:56 +0200 (Fr., 22. Jun 2018) | 1 Zeile
+
+introduced Layer
+------------------------------------------------------------------------
+r34 | dev | 2018-06-22 21:15:03 +0200 (Fr., 22. Jun 2018) | 1 Zeile
+
+removed Edges from IOBlock and Network; correct implementation of multiple output edges
+------------------------------------------------------------------------
+r33 | dev | 2018-06-22 17:42:59 +0200 (Fr., 22. Jun 2018) | 1 Zeile
+
+Seperated IOBlock from Node
+------------------------------------------------------------------------
+r32 | dev | 2018-06-22 17:01:37 +0200 (Fr., 22. Jun 2018) | 1 Zeile
+
+Visitable as Interface
+------------------------------------------------------------------------
+r31 | dev | 2018-06-22 16:50:09 +0200 (Fr., 22. Jun 2018) | 1 Zeile
+
+improved naming of gates
+------------------------------------------------------------------------
+r30 | dev | 2018-06-22 16:03:39 +0200 (Fr., 22. Jun 2018) | 1 Zeile
+
+added AssignGate; prepared IOBlock, InBlock & OutBlock to contain gates[]
+------------------------------------------------------------------------
+r29 | dev | 2018-06-21 21:39:26 +0200 (Do., 21. Jun 2018) | 1 Zeile
+
+removed parent from net-classes
+------------------------------------------------------------------------
+r28 | dev | 2018-06-21 21:33:18 +0200 (Do., 21. Jun 2018) | 1 Zeile
+
+Visitor returns path; reverse iteration of paths
+------------------------------------------------------------------------
+r27 | dev | 2018-06-21 06:14:16 +0200 (Do., 21. Jun 2018) | 1 Zeile
+
+changed naming conventions of graph
+------------------------------------------------------------------------
+r26 | dev | 2018-06-18 23:28:15 +0200 (Mo., 18. Jun 2018) | 2 Zeilen
+
+started graph-traversal functionallity with Visitor
+TODO fix chains output in Visitor.dumpChains()
+------------------------------------------------------------------------
+r25 | dev | 2018-06-16 22:45:33 +0200 (Sa., 16. Jun 2018) | 1 Zeile
+
+implemented reverseDump() of the network
+------------------------------------------------------------------------
+r24 | dev | 2018-06-13 22:11:06 +0200 (Mi., 13. Jun 2018) | 1 Zeile
+
+migrated Pin to Edge
+------------------------------------------------------------------------
+r23 | dev | 2018-06-13 21:19:03 +0200 (Mi., 13. Jun 2018) | 1 Zeile
+
+introduced Node; put IOBlock*, Gate* and MLNetwork into hierarchy based on Node
+------------------------------------------------------------------------
+r22 | dev | 2018-06-13 20:44:04 +0200 (Mi., 13. Jun 2018) | 1 Zeile
+
+introduced rapid.net.io and rapid.net.gate packages
+------------------------------------------------------------------------
+r21 | dev | 2018-06-13 19:28:26 +0200 (Mi., 13. Jun 2018) | 1 Zeile
+
+MLNetwork and IOBlock* naming and logging
+------------------------------------------------------------------------
+r20 | dev | 2018-06-12 21:28:33 +0200 (Di., 12. Jun 2018) | 1 Zeile
+
+added log4j 2 library locally into /lib folder
+------------------------------------------------------------------------
+r19 | dev | 2018-06-12 21:25:58 +0200 (Di., 12. Jun 2018) | 1 Zeile
+
+moved utility functions to rapid.util package; added javadoc for Util
+------------------------------------------------------------------------
+r18 | dev | 2018-06-12 21:20:06 +0200 (Di., 12. Jun 2018) | 2 Zeilen
+
+introduced log4j 2
+added logging for network-propagation and learning
+------------------------------------------------------------------------
+r17 | dev | 2018-06-07 22:32:41 +0200 (Do., 07. Jun 2018) | 1 Zeile
+
+Initial version of machine-learning-network named Rapid
+------------------------------------------------------------------------
+
