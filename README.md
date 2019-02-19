@@ -18,3 +18,7 @@ Attention: work in progress - project is in an early stage.
 2. Open the Project in NetBeans
 3. Run SkalarTestSuite.java in test/rapid/net/skalar
 
+## HOWTO: program your own neural-network
+1. open test/rapid/net/Numbers123Test.java
+2. follow the instructions inside the source-file
+

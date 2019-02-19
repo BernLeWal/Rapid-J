@@ -15,7 +15,7 @@ import org.apache.logging.log4j.util.BiConsumer;
 import rapid.net.port.FuzzyPort;
 import rapid.net.port.OneHotPort;
 import rapid.net.port.Port;
-import rapid.net.port.PortArray;
+import rapid.net.port.PortStream;
 import rapid.util.Utils;
 import rapid.net.port.Portable;
 import rapid.util.Ref;
@@ -123,8 +123,8 @@ public class Network extends Layer {
     }
 
     private int dumpNetworkToString_doOutput(Portable output, int sampleNr, StringBuilder sb, boolean showValues) {
-        if (output instanceof PortArray) {
-            PortArray sampler = (PortArray) output;
+        if (output instanceof PortStream) {
+            PortStream sampler = (PortStream) output;
             if (showValues) {
                 sampleNr = sampler.getIndex();
             }
@@ -161,8 +161,8 @@ public class Network extends Layer {
     }
 
     private void prepareValues_doPort(Portable port) {
-        if (port instanceof PortArray) {
-            PortArray sampler = (PortArray) port;
+        if (port instanceof PortStream) {
+            PortStream sampler = (PortStream) port;
             sampler.next(cycles);
         }
         if (port.getChildren() != null) {

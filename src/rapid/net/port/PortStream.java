@@ -8,16 +8,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import rapid.net.Gate;
 
-public class PortArray extends PortGroup {
+public class PortStream extends PortGroup {
 
-    private static final Logger LOG = LogManager.getLogger(PortArray.class);
+    private static final Logger LOG = LogManager.getLogger(PortStream.class);
 
     private int index = 0;
     private final ArrayList<List<Portable>> childrenByIndex;
     private boolean isCleared = true;
     private final Portable[] prototypes;
 
-    public PortArray(String name, Portable[] prototypes) {
+    public PortStream(String name, Portable[] prototypes) {
         super(name, prototypes);
         this.prototypes = prototypes;
 

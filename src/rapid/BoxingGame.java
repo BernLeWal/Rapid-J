@@ -112,11 +112,11 @@ public class BoxingGame {
         int cycle = playersNet.getCycles();
         OneHotPort inPos = PortFactory.createOneHot("InPos", 2, cycle);
         OneHotPort inAct = PortFactory.createOneHot("InAct", 1, cycle);
-        playersNet.addInput(PortFactory.createArray("InMoves", new Port[]{inPos, inAct}));
+        playersNet.addInput(PortFactory.createStream("InMoves", new Port[]{inPos, inAct}));
         MapToOneHotPort inPlayer = playersNet.addInput(PortFactory.createMapToOneHot("InPlayer"));
         OneHotPort outPos = PortFactory.createOneHot("OutPos", 2, cycle);
         OneHotPort outAct = PortFactory.createOneHot("OutAct", 1, cycle);
-        playersNet.addOutput(PortFactory.createArray("OutMoves", new Port[]{outPos, outAct}));
+        playersNet.addOutput(PortFactory.createStream("OutMoves", new Port[]{outPos, outAct}));
 
         String[] playerNames = {
             "Boxer1",

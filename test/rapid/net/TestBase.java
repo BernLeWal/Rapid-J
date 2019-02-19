@@ -63,6 +63,18 @@ public abstract class TestBase {
         return runTest_Stop();
     }
 
+    protected boolean runVerify(int[][] inputPattern, int[][] outputPattern) {
+        runTest_Start();
+        runTest_Verify(inputPattern, outputPattern, true);
+        return runTest_Stop();
+    }
+
+    protected boolean runVerify(int[][] inputPattern, int[][] outputPattern, BiPredicate<Integer[], Integer[]> verifyFunc) {
+        runTest_Start();
+        runTest_Verify(inputPattern, verifyFunc, outputPattern, true);
+        return runTest_Stop();
+    }
+    
     protected void runTest_Start() {
         startMillis = System.currentTimeMillis();
     }

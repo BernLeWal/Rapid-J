@@ -15,10 +15,16 @@ public class Gate extends Node {
     public enum Operation {
         AND("AND", (values) -> {
             float f = 1.0f;
+            int count0 = 0;
             for (float val : values) {
-                f = f * val;
+                if (val != 0.0f) {
+                    f = f * val;
+                } else {
+                    count0++;
+                }
             }
-            return (f <= 1.0f) ? f : 1.0f / f;
+            f = (f <= 1.0f) ? f : (1.0f / f);
+            return (count0 == 0) ? f : 0.0f; // TODO (f * (1.0f-(float)Math.tanh(30.0f*count0/values.size())));
         }),
         MUL("MUL", (values) -> {
             float f = 1.0f;
@@ -27,7 +33,6 @@ public class Gate extends Node {
             }
             return f;
         }),
-        
         OR("OR", (values) -> {
             float f = 0.0f;
             int count = 0;
@@ -240,11 +245,11 @@ public class Gate extends Node {
     public static Gate createMulGate(Layer parent, String name, int cycle) {
         return new Gate(parent, name, Operation.MUL, cycle);
     }
-    
+
     public static Gate createOrGate(Layer parent, String name, int cycle) {
         return new Gate(parent, name, Operation.OR, cycle);
     }
-    
+
     public static Gate createAddGate(Layer parent, String name, int cycle) {
         return new Gate(parent, name, Operation.ADD, cycle);
     }
