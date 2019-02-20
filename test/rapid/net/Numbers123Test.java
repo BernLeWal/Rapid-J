@@ -124,7 +124,7 @@ public class Numbers123Test extends TestBase {
         runTest( LEARN_DATA_IN, LEARN_DATA_OUT );
         
         // STEP 7: apply the patterns to verify if the network finds the real results on test data
-        // TODO runVerify( TEST_DATA_IN, TEST_DATA_OUT );
+        runVerify( TEST_DATA_IN, TEST_DATA_OUT );
         
         LOG.debug("========== Finished: " + name + " ==========");
     }

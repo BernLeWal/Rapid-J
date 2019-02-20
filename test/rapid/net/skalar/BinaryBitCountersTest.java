@@ -1,4 +1,12 @@
 // License: Apache 2.0. See LICENSE file in root directory.
+/**
+ * EXPERIMENTAL - (currently DEPRECATED)
+ * The idea was to user Binary-Ports instead of One-Hot to reduce the amount of necessary
+ * output nodes, f.e. 256 for a 8-Bit number.
+ * 
+ * TODO: To implement this the concept of the calculations would have to be
+ * extended to implement unstetic-functions for resulting to a bit-mask.
+ */
 package rapid.net.skalar;
 
 import org.apache.logging.log4j.LogManager;
@@ -78,27 +86,27 @@ public class BinaryBitCountersTest extends TestBase {
         bitCountingTest(3, network.addInput(PortFactory.createBinary("In", 3, network.getCycles())), true);
     }
 
-    //@Test
+    @Test
     public void test4BitCounting2Bin() {
         bitCountingTest(4, network.addInput(PortFactory.createBinary("In", 4, network.getCycles())), true);
     }
 
-    //@Test
+    @Test
     public void test5BitCounting2Bin() {
         bitCountingTest(5, network.addInput(PortFactory.createBinary("In", 5, network.getCycles())), true);
     }
 
-    //@Test
+    @Test
     public void test6BitCounting2Bin() {
         bitCountingTest(6, network.addInput(PortFactory.createBinary("In", 6, network.getCycles())), true);
     }
 
-    //@Test
+    @Test
     public void test7BitCounting2Bin() {
         bitCountingTest(7, network.addInput(PortFactory.createBinary("In", 7, network.getCycles())), true);
     }
 
-    //@Test
+    @Test
     public void test8BitCounting2Bin() {
         bitCountingTest(8, network.addInput(PortFactory.createBinary("In", 8, network.getCycles())), true);
     }

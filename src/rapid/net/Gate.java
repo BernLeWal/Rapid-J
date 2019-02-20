@@ -15,16 +15,16 @@ public class Gate extends Node {
     public enum Operation {
         AND("AND", (values) -> {
             float f = 1.0f;
-            int count0 = 0;
+            int count = 0;
             for (float val : values) {
+                if( val > 1.0f )
+                    val = 1.0f / val;
                 if (val != 0.0f) {
                     f = f * val;
-                } else {
-                    count0++;
-                }
+                    count++;
+                } 
             }
-            f = (f <= 1.0f) ? f : (1.0f / f);
-            return (count0 == 0) ? f : 0.0f; // TODO (f * (1.0f-(float)Math.tanh(30.0f*count0/values.size())));
+            return f * ((float)count / (float)values.size()); 
         }),
         MUL("MUL", (values) -> {
             float f = 1.0f;
