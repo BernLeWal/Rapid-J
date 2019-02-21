@@ -36,9 +36,8 @@ public class PortGroup implements Portable {
         for (Portable child : prototype.children) {
             children.add(PortFactory.createByPrototype(child.name() + "'", child, cycle));
         }
-
     }
-
+    
     // Structure of portables
     @Override
     public String name() {

@@ -52,13 +52,55 @@ public class PortFactory {
     public static FuzzyPort createFuzzy(String name, int max, int cycle) {
         return new FuzzyPort(name, max, cycle);
     }
-
-    public static BinaryPort createBinary(String name, int bits, int cycle) {
-        return new BinaryPort("b" + name, bits, cycle);
+    
+    /**
+     * Creates an instance of a Vector (one-dimensional array) of Fuzzy-Values
+     * usable as input- or output-node in a neural network.
+     * Fuzzy means that the value is not only true (max) or false (0) but also anything between.
+     * @param name the name of the node
+     * @param size the size of the vector (the number of elements in the 1-D array)
+     * @param max the maximum value per element
+     * @param cycle stores the cycle (timestamp) of creation, just for monitoring purposes 
+     *              read cycle from network.getCycles()
+     * @return the new instance of the FuzzyVector
+     */
+    public static FuzzyVector createVector(String name, int size, int max, int cycle) {
+        return new FuzzyVector(name, size, max, cycle);
     }
 
-    public static PortGroup createGroup(String name, Portable[] childPorts) {
-        return new PortGroup(name, childPorts);
+        /**
+     * Creates an instance of a Matrix (two-dimensional array) of Fuzzy-Values
+     * usable as input- or output-node in a neural network.
+     * Fuzzy means that the value is not only true (max) or false (0) but also anything between.
+     * @param name the name of the node
+     * @param cols the number of columns of the matrix
+     * @param rows the number of rows of the matrix
+     * @param max the maximum value per element
+     * @param cycle stores the cycle (timestamp) of creation, just for monitoring purposes 
+     *              read cycle from network.getCycles()
+     * @return the new instance of the FuzzyVector
+     */
+    public static FuzzyMatrix createMatrix(String name, int cols, int rows, int max, int cycle) {
+        return new FuzzyMatrix(name, cols, rows, max, cycle);
+    }
+    
+    /**
+     * EXPERIMENTAL (currently deprecated)
+     * Binary-Ports represent the possibilities via bit-masks, that is by using of only
+     * 8 nodes it could represent 256 possibilities which leads to a big decrease of
+     * the number of nodes in the network.
+     * 
+     * @param name the name of the node
+     * @param bits the number of bits needed for representing the nodes
+     * @param cycle stores the cycle (timestamp) of creation, just for monitoring purposes 
+     *              read cycle from network.getCycles()
+     * @return the new instance of the BinaryPort
+     * @deprecated TODO: To implement this the concept of the calculations would have to be
+     *              extended to implement unstetic-functions for resulting to a bit-mask.
+     */
+    @Deprecated
+    public static BinaryPort createBinary(String name, int bits, int cycle) {
+        return new BinaryPort("b" + name, bits, cycle);
     }
 
     /**
@@ -71,6 +113,12 @@ public class PortFactory {
     public static PortStream createStream(String name, Portable[] prototype) {
         return new PortStream(name, prototype);
     }
+    
+    public static PortGroup createGroup(String name, Portable[] childPorts) {
+        return new PortGroup(name, childPorts);
+    }
+
+
 
     /**
      * Create new instance by a prototype depending on the prototype-class.

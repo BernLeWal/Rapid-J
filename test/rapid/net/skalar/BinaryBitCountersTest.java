@@ -1,7 +1,7 @@
 // License: Apache 2.0. See LICENSE file in root directory.
 /**
  * EXPERIMENTAL - (currently DEPRECATED)
- * The idea was to user Binary-Ports instead of One-Hot to reduce the amount of necessary
+ * The idea was to use Binary-Ports instead of One-Hot to reduce the amount of necessary
  * output nodes, f.e. 256 for a 8-Bit number.
  * 
  * TODO: To implement this the concept of the calculations would have to be

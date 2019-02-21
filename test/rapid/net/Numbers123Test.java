@@ -98,26 +98,8 @@ public class Numbers123Test extends TestBase {
         LOG.debug("---------- PHASE 0: Initialisation ---------- ");
         // STEP 5: create the input- and output-nodes of the network, called ports.
         int cycle = network.getCycles();    // returns the current "timestamp", to show when the nodes where created
-        network.addInput( PortFactory.createFuzzy("In0,0", 1, cycle) );
-        network.addInput( PortFactory.createFuzzy("In0,1", 1, cycle) );
-        network.addInput( PortFactory.createFuzzy("In0,2", 1, cycle) );
-        network.addInput( PortFactory.createFuzzy("In0,3", 1, cycle) );
-        network.addInput( PortFactory.createFuzzy("In1,0", 1, cycle) );
-        network.addInput( PortFactory.createFuzzy("In1,1", 1, cycle) );
-        network.addInput( PortFactory.createFuzzy("In1,2", 1, cycle) );
-        network.addInput( PortFactory.createFuzzy("In1,3", 1, cycle) );
-        network.addInput( PortFactory.createFuzzy("In2,0", 1, cycle) );
-        network.addInput( PortFactory.createFuzzy("In2,1", 1, cycle) );
-        network.addInput( PortFactory.createFuzzy("In2,2", 1, cycle) );
-        network.addInput( PortFactory.createFuzzy("In2,3", 1, cycle) );
-        network.addInput( PortFactory.createFuzzy("In3,0", 1, cycle) );
-        network.addInput( PortFactory.createFuzzy("In3,1", 1, cycle) );
-        network.addInput( PortFactory.createFuzzy("In3,2", 1, cycle) );
-        network.addInput( PortFactory.createFuzzy("In3,3", 1, cycle) );
-        network.addInput( PortFactory.createFuzzy("In4,0", 1, cycle) );
-        network.addInput( PortFactory.createFuzzy("In4,1", 1, cycle) );
-        network.addInput( PortFactory.createFuzzy("In4,2", 1, cycle) );
-        network.addInput( PortFactory.createFuzzy("In4,3", 1, cycle) );
+        //network.addInput( PortFactory.createVector("In", 20, 1, cycle) );
+        network.addInput( PortFactory.createMatrix("In", 4, 5, 1, cycle) );
         network.addOutput( PortFactory.createOneHot("Out", 3, cycle) );
         
         // STEP 6: apply the patterns to learn, run and verify the tests
