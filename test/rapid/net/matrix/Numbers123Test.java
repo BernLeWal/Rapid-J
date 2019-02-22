@@ -104,9 +104,11 @@ public class Numbers123Test extends TestBase {
         network.addOutput( PortFactory.createOneHot("Out", 3, cycle) );
         
         // STEP 6: apply the patterns to learn, run and verify the tests
+        name = "Numbers123-LEARN";
         runTest( LEARN_DATA_IN, LEARN_DATA_OUT );
         
         // STEP 7: apply the patterns to verify if the network finds the real results on test data
+        name = "Numbers123-TEST";
         runVerify( TEST_DATA_IN, TEST_DATA_OUT );
         
         LOG.debug("========== Finished: " + name + " ==========");

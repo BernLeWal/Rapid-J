@@ -161,7 +161,7 @@ public class FuzzyTest extends TestBase {
 
     @Test
     public void addTest() {
-        addTest(null, null);
+        addTest("", null, null);
     }
 
     @Test
@@ -170,7 +170,7 @@ public class FuzzyTest extends TestBase {
         generateLinearPattern(verifyInputPattern0, 0, MAX_VALUE, 1, 0);
         int[][] verifyOutputPattern = generateLinearPattern(0, MAX_VALUE, 1);
 
-        addTest(verifyInputPattern0, verifyOutputPattern);
+        addTest("A+0", verifyInputPattern0, verifyOutputPattern);
     }
 
     @Test
@@ -179,7 +179,7 @@ public class FuzzyTest extends TestBase {
         generateLinearPattern(verifyInputPattern1, 0, MAX_VALUE, 1, 1);
         int[][] verifyOutputPattern = generateLinearPattern(0, MAX_VALUE, 1);
 
-        addTest(verifyInputPattern1, verifyOutputPattern);
+        addTest("0+A", verifyInputPattern1, verifyOutputPattern);
     }
 
     @Test
@@ -189,7 +189,7 @@ public class FuzzyTest extends TestBase {
         generateLinearPattern(verifyInputPattern2, 0, MAX_VALUE, 1, 1);
         int[][] verifyOutputPattern2 = generateLinearPattern(0, MAX_VALUE, 2);
 
-        addTest(verifyInputPattern2, verifyOutputPattern2);
+        addTest("A+A", verifyInputPattern2, verifyOutputPattern2);
     }
     
     @Test
@@ -199,11 +199,11 @@ public class FuzzyTest extends TestBase {
         generateLinearPattern(verifyInputPattern2, MAX_VALUE, 0, 1, 1);
         int[][] verifyOutputPattern2 = generateConstantPattern(0, MAX_VALUE, MAX_VALUE);
         
-        addTest(verifyInputPattern2, verifyOutputPattern2);
+        addTest("A-A", verifyInputPattern2, verifyOutputPattern2);
     }
 
-    protected void addTest(int[][] verifyInputPattern, int[][] verifyOutputPattern) {
-        name = "AddTest";
+    protected void addTest(String name2, int[][] verifyInputPattern, int[][] verifyOutputPattern) {
+        this.name = "AddTest" + name2;
         LOG.info("========== Started: " + name + " ==========");
 
         LOG.debug("---------- PHASE 0: Initialisation ---------- ");

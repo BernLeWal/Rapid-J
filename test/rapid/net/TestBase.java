@@ -1,6 +1,7 @@
 // License: Apache 2.0. See LICENSE file in root directory.
 package rapid.net;
 
+import java.time.LocalDateTime;
 import java.util.function.BiPredicate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,6 +11,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import rapid.util.CsvWriter;
 import rapid.util.Utils;
 
 public abstract class TestBase {
@@ -17,6 +19,7 @@ public abstract class TestBase {
     private static final Logger LOG = LogManager.getLogger(TestBase.class);
 
     protected String name;
+    protected CsvWriter csvWriter;
 
     protected Network network;
 
@@ -26,6 +29,25 @@ public abstract class TestBase {
 
     protected TestBase(String name) {
         this.name = name;
+
+        csvWriter = new CsvWriter("logs/" + name + ".csv");
+        if (csvWriter.open(true)) {
+            csvWriter.print("Name");
+            csvWriter.print("Result");
+            csvWriter.print("Date/Time");
+            csvWriter.print("Duration[msec]");
+            csvWriter.print("#Succeeded");
+            csvWriter.print("#Failed");
+            csvWriter.print("#Cycles");
+            csvWriter.print("#Gates");
+            csvWriter.println();
+        }
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        csvWriter.close();
+        super.finalize();
     }
 
     @BeforeClass
@@ -125,6 +147,15 @@ public abstract class TestBase {
         long stopMillis = System.currentTimeMillis();
         LOG.info(network.toString());
         LOG.info(name + ": Test " + ((0 == failCount) ? "OK" : "FAILED") + " succeeded=" + successCount + " failed=" + failCount + " duration=" + (stopMillis - startMillis) + " msec.");
+        csvWriter.print(name);
+        csvWriter.print((0 == failCount) ? "OK" : "FAILED");
+        csvWriter.print(LocalDateTime.now().toString());
+        csvWriter.print((int) (stopMillis - startMillis));
+        csvWriter.print(successCount);
+        csvWriter.print(failCount);
+        csvWriter.print(network.getCycles());
+        csvWriter.print(network.gates.size());
+        csvWriter.println();
         assertEquals(name + ": Tests succeeded=" + successCount + " failed=" + failCount + " duration=" + (stopMillis - startMillis) + " msec.", 0, failCount);
         return failCount == 0;
     }
