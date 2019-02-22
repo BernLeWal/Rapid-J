@@ -74,7 +74,7 @@ public abstract class TestBase {
         runTest_Verify(inputPattern, verifyFunc, outputPattern, true);
         return runTest_Stop();
     }
-    
+
     protected void runTest_Start() {
         startMillis = System.currentTimeMillis();
     }
@@ -131,10 +131,20 @@ public abstract class TestBase {
 
     public static int[][] generateConstantPattern(int from, int to, int value) {
         int[][] pattern = new int[to - from + 1][1];
-        for (int index = from; index <= to; index++) {
-            pattern[index][0] = value;
-        }
+        generateConstantPattern(pattern, from, to, value, 0);
         return pattern;
+    }
+
+    public static void generateConstantPattern(int[][] pattern, int from, int to, int value, int dimensionIndex) {
+        if (from <= to) {
+            for (int index = from; index <= to; index++) {
+                pattern[index][dimensionIndex] = value;
+            }
+        } else {
+            for (int index = from; index >= to; index--) {
+                pattern[from - index][dimensionIndex] = value;
+            }
+        }
     }
 
     public static int[][] generateLinearPattern(int from, int to, int factor) {
@@ -150,7 +160,7 @@ public abstract class TestBase {
             }
         } else {
             for (int index = from; index >= to; index--) {
-                pattern[from-index][dimensionIndex] = index * factor;
+                pattern[from - index][dimensionIndex] = index * factor;
             }
         }
     }

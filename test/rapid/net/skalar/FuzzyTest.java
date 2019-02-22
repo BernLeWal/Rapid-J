@@ -182,7 +182,7 @@ public class FuzzyTest extends TestBase {
         addTest(verifyInputPattern1, verifyOutputPattern);
     }
 
-    //@Test
+    @Test
     public void addTestAplusA() {   // A+A = 2*A
         int[][] verifyInputPattern2 = new int[MAX_VALUE + 1][2];
         generateLinearPattern(verifyInputPattern2, 0, MAX_VALUE, 1, 0);
@@ -192,7 +192,7 @@ public class FuzzyTest extends TestBase {
         addTest(verifyInputPattern2, verifyOutputPattern2);
     }
     
-    //@Test
+    @Test
     public void addTestAplusInvA() {    // A+(1-A) = 1
         int[][] verifyInputPattern2 = new int[MAX_VALUE + 1][2];
         generateLinearPattern(verifyInputPattern2, 0, MAX_VALUE, 1, 0);

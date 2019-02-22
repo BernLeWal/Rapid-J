@@ -4,11 +4,12 @@
  * Whole source is implemented as NUnit Test-Class.
  * Follow the steps marked by "STEP XXX:" !
  */
-package rapid.net;
+package rapid.net.matrix;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
+import rapid.net.TestBase;
 import rapid.net.port.PortFactory;
 
 // STEP 1: create a new class and derive it from TestBase
