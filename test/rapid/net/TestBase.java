@@ -2,6 +2,8 @@
 package rapid.net;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.function.BiPredicate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,7 +36,8 @@ public abstract class TestBase {
         if (csvWriter.open(true)) {
             csvWriter.print("Name");
             csvWriter.print("Result");
-            csvWriter.print("Date/Time");
+            csvWriter.print("Date");
+            csvWriter.print("Time");
             csvWriter.print("Duration[msec]");
             csvWriter.print("#Succeeded");
             csvWriter.print("#Failed");
@@ -149,7 +152,10 @@ public abstract class TestBase {
         LOG.info(name + ": Test " + ((0 == failCount) ? "OK" : "FAILED") + " succeeded=" + successCount + " failed=" + failCount + " duration=" + (stopMillis - startMillis) + " msec.");
         csvWriter.print(name);
         csvWriter.print((0 == failCount) ? "OK" : "FAILED");
-        csvWriter.print(LocalDateTime.now().toString());
+        DateTimeFormatter ftDate = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
+        csvWriter.print(ftDate.format(LocalDateTime.now()));
+        DateTimeFormatter ftTime = DateTimeFormatter.ofPattern("HH:mm:ss.SSS", Locale.ENGLISH);
+        csvWriter.print(ftTime.format(LocalDateTime.now()));
         csvWriter.print((int) (stopMillis - startMillis));
         csvWriter.print(successCount);
         csvWriter.print(failCount);
