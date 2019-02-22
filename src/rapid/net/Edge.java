@@ -3,6 +3,7 @@ package rapid.net;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import rapid.util.GraphMLWriter;
 
 public class Edge implements Visitable {
 
@@ -152,5 +153,12 @@ public class Edge implements Visitable {
             sb.append(bias);
         }
         return sb.toString();
+    }
+
+    public void toGraphML(GraphMLWriter gml, boolean showValues, int resultCycle) {
+        gml.beginEdge(name, from.name(), to.name()).data(GraphMLWriter.DATA_WEIGHT, weight).data(GraphMLWriter.DATA_BIAS, bias);
+        if( showValues && this.cycle == resultCycle)
+            gml.data(GraphMLWriter.EDGEDATA_VALUE, value);
+        gml.endEdge();
     }
 }

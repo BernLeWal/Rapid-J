@@ -101,6 +101,7 @@ public class FuzzyTest extends TestBase {
             runTest_Verify(verifyInputPattern, verifyOutputPattern, true);
         }
         runTest_Stop();
+        network.toGraphML("logs/" + name + ".graphml", false);
 
         assertEquals("Number of gates in the hidden-layer.", sectors-1, network.getGates().size());
 
@@ -129,7 +130,7 @@ public class FuzzyTest extends TestBase {
     }
 
     protected void assignTest(int learnAtValue) {
-        name = "AssignTestAt" + learnAtValue;
+        name = "FuzzyAssignTestAt" + learnAtValue;
         LOG.info("========== Started: " + name + " ==========");
 
         LOG.debug("---------- PHASE 0: Initialisation ---------- ");
@@ -154,6 +155,7 @@ public class FuzzyTest extends TestBase {
         runTest_Verify(verifyInputPattern, verifyOutputPattern, true);
         runTest_Stop();
 
+        network.toGraphML("logs/" + name + ".graphml", false);
         assertEquals("Number of gates in the hidden-layer.", 1, network.getGates().size());
 
         LOG.debug("========== Finished: " + name + " ==========");
@@ -203,7 +205,7 @@ public class FuzzyTest extends TestBase {
     }
 
     protected void addTest(String name2, int[][] verifyInputPattern, int[][] verifyOutputPattern) {
-        this.name = "AddTest" + name2;
+        this.name = "FuzzyAddTest" + name2;
         LOG.info("========== Started: " + name + " ==========");
 
         LOG.debug("---------- PHASE 0: Initialisation ---------- ");
@@ -234,6 +236,7 @@ public class FuzzyTest extends TestBase {
         }
         runTest_Stop();
 
+        network.toGraphML("logs/" + name + ".graphml", false);
         assertEquals("Number of gates in the hidden-layer.", 2, network.getGates().size());
 
         LOG.debug("========== Finished: " + name + " ==========");

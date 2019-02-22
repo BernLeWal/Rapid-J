@@ -139,6 +139,7 @@ public class BinaryBitCountersTest extends TestBase {
         }
 
         runTest(inputPattern, outputPattern);
+        network.toGraphML("logs/" + name + ".graphml", false);
 
         LOG.debug("========== Finished: " + name + " ==========");
     }

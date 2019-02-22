@@ -41,6 +41,7 @@ public class BoxingGameTest extends TestBase {
         runTest(inputPattern, outputPattern, (in, out) -> {
             return checkRules(in, out);
         });
+        network.toGraphML("logs/" + name + ".graphml", false);
         assertEquals("Number of gates in the hidden-layer.", 10, network.gates.size());
 
         LOG.debug("========== Finished: " + name + " ==========");

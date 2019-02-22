@@ -18,6 +18,7 @@ import rapid.net.port.Port;
 import rapid.net.port.PortStream;
 import rapid.util.Utils;
 import rapid.net.port.Portable;
+import rapid.util.GraphMLWriter;
 import rapid.util.Ref;
 
 public class Network extends Layer {
@@ -141,6 +142,53 @@ public class Network extends Layer {
             }
         }
         return sampleNr;
+    }
+
+    public void toGraphML(String filename, boolean showValues) {
+        GraphMLWriter gml = new GraphMLWriter(filename);
+        gml.open();
+        gml.beginGraph(name, true);
+        // Data for Nodes
+        gml.defNodeData(GraphMLWriter.DATA_NAME, GraphMLWriter.DATA_NAME, GraphMLWriter.TYPE_STRING);
+        gml.defNodeData(GraphMLWriter.DATA_LAYER, GraphMLWriter.DATA_LAYER, GraphMLWriter.TYPE_STRING);
+        gml.defNodeData(GraphMLWriter.DATA_PARENT, GraphMLWriter.DATA_PARENT, GraphMLWriter.TYPE_STRING);
+
+        // Data for Edges:
+        gml.defEdgeData(GraphMLWriter.EDGEDATA_NAME, GraphMLWriter.EDGEDATA_NAME, GraphMLWriter.TYPE_STRING);
+        gml.defEdgeData(GraphMLWriter.DATA_WEIGHT, GraphMLWriter.DATA_WEIGHT, GraphMLWriter.TYPE_FLOAT);
+        gml.defEdgeData(GraphMLWriter.DATA_BIAS, GraphMLWriter.DATA_BIAS, GraphMLWriter.TYPE_FLOAT);
+        
+        if (showValues) {
+            gml.defNodeData(GraphMLWriter.DATA_VALUE, GraphMLWriter.DATA_VALUE, GraphMLWriter.TYPE_FLOAT);
+            gml.defEdgeData(GraphMLWriter.EDGEDATA_VALUE, GraphMLWriter.EDGEDATA_VALUE, GraphMLWriter.TYPE_FLOAT);
+        }
+
+        for (Portable input : inputs) {
+            toGraphML_doPort(input, gml, "input", showValues);
+        }
+        for (Gate gate : gates) {
+            gate.toGraphML(gml, "hidden", showValues, cycles);
+        }
+        for (Portable output : outputs) {
+            toGraphML_doPort(output, gml, "output", showValues);
+        }
+        gml.endGraph();
+        gml.close();
+    }
+
+    private void toGraphML_doPort(Portable input, GraphMLWriter gml, String layer, boolean showValues) {
+        if (input instanceof Port) {
+            List<Gate> gates = ((Port) input).getGates();
+            for (Gate gate : gates) {
+                gate.toGraphML(gml, layer, showValues, cycles);
+            }
+        }
+        if (input.getChildren() != null) {
+            Iterator<Portable> itChild = input.getChildren().iterator();
+            while (itChild.hasNext()) {
+                toGraphML_doPort(itChild.next(), gml, layer, showValues);
+            }
+        }
     }
 
     public void clearPortValues() {

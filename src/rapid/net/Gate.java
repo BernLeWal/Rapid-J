@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.function.Function;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import rapid.util.GraphMLWriter;
 
 public class Gate extends Node {
 
@@ -17,14 +18,15 @@ public class Gate extends Node {
             float f = 1.0f;
             int count = 0;
             for (float val : values) {
-                if( val > 1.0f )
+                if (val > 1.0f) {
                     val = 1.0f / val;
+                }
                 if (val != 0.0f) {
                     f = f * val;
                     count++;
-                } 
+                }
             }
-            return f * ((float)count / (float)values.size()); 
+            return f * ((float) count / (float) values.size());
         }),
         MUL("MUL", (values) -> {
             float f = 1.0f;
@@ -233,6 +235,18 @@ public class Gate extends Node {
             }
         }
         return sb.toString();
+    }
+
+    // exporting
+    public void toGraphML(GraphMLWriter gml, String layer, boolean showValues, int resultCycle) {
+        gml.beginNode(name()).data(GraphMLWriter.DATA_LAYER, layer).data(GraphMLWriter.DATA_PARENT, parent.name);
+        if (this.resultCycle == resultCycle) {
+            gml.data(GraphMLWriter.DATA_VALUE, this.result);
+        }
+        gml.endNode();
+        for (Edge out : outs) {
+            out.toGraphML(gml, showValues, resultCycle);
+        }
     }
 
     //

@@ -111,6 +111,9 @@ public class Numbers123Test extends TestBase {
         name = "Numbers123-TEST";
         runVerify( TEST_DATA_IN, TEST_DATA_OUT );
         
+        // export the neural-network to GraphML to show in a viewer, f.e. Gephi
+        network.toGraphML("logs/" + name + ".graphml", true);
+        
         LOG.debug("========== Finished: " + name + " ==========");
     }
 }
