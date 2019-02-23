@@ -101,7 +101,7 @@ public class FuzzyTest extends TestBase {
             runTest_Verify(verifyInputPattern, verifyOutputPattern, true);
         }
         runTest_Stop();
-        network.toGraphML("logs/" + name + ".graphml", false);
+        network.toGraphML(name + ".graphml", false);
 
         assertEquals("Number of gates in the hidden-layer.", sectors - 1, network.getGates().size());
 
@@ -155,7 +155,7 @@ public class FuzzyTest extends TestBase {
         runTest_Verify(verifyInputPattern, verifyOutputPattern, true);
         runTest_Stop();
 
-        network.toGraphML("logs/" + name + ".graphml", false);
+        network.toGraphML(name + ".graphml", false);
         assertEquals("Number of gates in the hidden-layer.", 1, network.getGates().size());
 
         LOG.debug("========== Finished: " + name + " ==========");
@@ -236,7 +236,7 @@ public class FuzzyTest extends TestBase {
         }
         runTest_Stop();
 
-        network.toGraphML("logs/" + name + ".graphml", false);
+        network.toGraphML(name + ".graphml", false);
         assertEquals("Number of gates in the hidden-layer.", 2, network.getGates().size());
 
         LOG.debug("========== Finished: " + name + " ==========");
@@ -256,8 +256,8 @@ public class FuzzyTest extends TestBase {
         network.addOutput(PortFactory.createOneHot("Out", 1, cycle));
 
         // create test-patterns and result-putterns
-        int[][] learnInputPattern = new int[][]{{1, 1, 1, 0}, {0, 1, 1, 1}};
-        int[][] learnOutputPattern = new int[][]{{0}, {1}};
+        int[][] learnInputPattern = new int[][]{{1, 1, 1, 0}, {0, 1, 1, 0}, {0, 1, 1, 1}};
+        int[][] learnOutputPattern = new int[][]{{1}, {0}, {1}};
 
         // perform the tests
         runTest_Start();
@@ -266,11 +266,11 @@ public class FuzzyTest extends TestBase {
         runTest_Optimize();
         runTest_Verify(learnInputPattern, learnOutputPattern, true);
         runTest_Stop();
-        
-        network.toGraphML("logs/" + name + ".graphml", false);
+
+        network.toGraphML(name + ".graphml", false);
         // TODO assertEquals("Number of gates in the hidden-layer.", 3, network.getGates().size());
 
-        LOG.debug("========== Finished: " + name + " ==========");        
+        LOG.debug("========== Finished: " + name + " ==========");
     }
 
 }

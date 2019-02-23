@@ -111,7 +111,7 @@ public class Numbers123Test extends TestBase {
         runVerify( TEST_DATA_IN, TEST_DATA_OUT );
         
         // export the neural-network to GraphML to show in a viewer, f.e. Gephi
-        network.toGraphML("logs/" + name + ".graphml", true);
+        network.toGraphML(name + ".graphml", true);
         
         LOG.debug("========== Finished: " + name + " ==========");
     }
@@ -129,7 +129,7 @@ public class Numbers123Test extends TestBase {
         runTest( LEARN_DATA_IN, LEARN_DATA_OUT );
         runTest( TEST_DATA_IN, TEST_DATA_OUT );
         
-        network.toGraphML("logs/" + name + ".graphml", true);
+        network.toGraphML(name + ".graphml", true);
         LOG.debug("========== Finished: " + name + " ==========");
     }
 }

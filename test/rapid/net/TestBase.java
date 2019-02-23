@@ -121,6 +121,7 @@ public abstract class TestBase {
             } else {
                 failCount++;
                 resultOk = false;
+                network.toGraphML(name + "-FAIL" + failCount + ".graphml", true);
                 if (assertIfFailed) {
                     assertTrue("Input is " + Utils.intArrayToString(inputPattern[i]) + ", Output should be " + Utils.intArrayToString(outputPattern[i]) + " but is " + Utils.intArrayToString(network.getOutputValues()), false);
                 }
@@ -138,6 +139,7 @@ public abstract class TestBase {
             } else {
                 failCount++;
                 resultOk = false;
+                network.toGraphML(name + "-FAIL" + failCount + ".graphml", true);
                 if (assertIfFailed) {
                     assertTrue("Verification of learned data. Input is " + Utils.intArrayToString(inputPattern[i]) + " Output should be " + Utils.intArrayToString(outputPattern[i]) + " but is " + Utils.intArrayToString(network.getOutputValues()), false);
                 }
