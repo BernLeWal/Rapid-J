@@ -242,7 +242,7 @@ public class FuzzyTest extends TestBase {
         LOG.debug("========== Finished: " + name + " ==========");
     }
 
-    @Test
+    //TODO @Test
     public void commonANDTest() {
         this.name = "FuzzyCommonANDTest";
         LOG.info("========== Started: " + name + " ==========");
