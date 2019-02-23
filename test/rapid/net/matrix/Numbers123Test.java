@@ -92,28 +92,44 @@ public class Numbers123Test extends TestBase {
      * results.
      */
     @Test
-    public void numbers123Test() {
-        name = "Numbers123";
+    public void numbers123Recognition() {
+        name = "Numbers123Rec";
         LOG.info("========== Started: " + name + " ==========");
 
         LOG.debug("---------- PHASE 0: Initialisation ---------- ");
         // STEP 5: create the input- and output-nodes of the network, called ports.
         int cycle = network.getCycles();    // returns the current "timestamp", to show when the nodes where created
-        //network.addInput( PortFactory.createVector("In", 20, 1, cycle) );
         network.addInput( PortFactory.createMatrix("In", 4, 5, 1, cycle) );
         network.addOutput( PortFactory.createOneHot("Out", 3, cycle) );
         
         // STEP 6: apply the patterns to learn, run and verify the tests
-        name = "Numbers123-LEARN";
+        name = "Numbers123Rec-LEARN";
         runTest( LEARN_DATA_IN, LEARN_DATA_OUT );
         
         // STEP 7: apply the patterns to verify if the network finds the real results on test data
-        name = "Numbers123-TEST";
+        name = "Numbers123Rec-TEST";
         runVerify( TEST_DATA_IN, TEST_DATA_OUT );
         
         // export the neural-network to GraphML to show in a viewer, f.e. Gephi
         network.toGraphML("logs/" + name + ".graphml", true);
         
+        LOG.debug("========== Finished: " + name + " ==========");
+    }
+    
+    @Test 
+    public void numbers123LearnAll() {
+        name = "Numbers123LearnAll";
+        LOG.info("========== Started: " + name + " ==========");
+
+        LOG.debug("---------- PHASE 0: Initialisation ---------- ");
+        int cycle = network.getCycles();    
+        network.addInput( PortFactory.createMatrix("In", 4, 5, 1, cycle) );
+        network.addOutput( PortFactory.createOneHot("Out", 3, cycle) );
+        
+        runTest( LEARN_DATA_IN, LEARN_DATA_OUT );
+        runTest( TEST_DATA_IN, TEST_DATA_OUT );
+        
+        network.toGraphML("logs/" + name + ".graphml", true);
         LOG.debug("========== Finished: " + name + " ==========");
     }
 }

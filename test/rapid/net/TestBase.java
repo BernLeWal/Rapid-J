@@ -112,38 +112,45 @@ public abstract class TestBase {
         LOG.info(name + ": learned   " + network.toString() + "\n" + network.dumpNetworkToString(false));
     }
 
-    protected void runTest_Verify(int[][] inputPattern, int[][] outputPattern, boolean assertIfFailed) {
+    protected boolean runTest_Verify(int[][] inputPattern, int[][] outputPattern, boolean assertIfFailed) {
+        boolean resultOk = true;
         LOG.debug("---------- PHASE " + (assertIfFailed ? "4" : "2") + ": Verification ---------- ");
         for (int i = 0; i < inputPattern.length; i++) {
             if (network.verify(inputPattern[i], outputPattern[i], null)) {
                 successCount++;
             } else {
                 failCount++;
+                resultOk = false;
                 if (assertIfFailed) {
                     assertTrue("Input is " + Utils.intArrayToString(inputPattern[i]) + ", Output should be " + Utils.intArrayToString(outputPattern[i]) + " but is " + Utils.intArrayToString(network.getOutputValues()), false);
                 }
             }
         }
+        return resultOk;
     }
 
-    protected void runTest_Verify(int[][] inputPattern, BiPredicate<Integer[], Integer[]> verifyFunc, int[][] outputPattern, boolean assertIfFailed) {
+    protected boolean runTest_Verify(int[][] inputPattern, BiPredicate<Integer[], Integer[]> verifyFunc, int[][] outputPattern, boolean assertIfFailed) {
+        boolean resultOk = true;
         LOG.debug("---------- PHASE " + (assertIfFailed ? "4" : "2") + ": Verification ---------- ");
         for (int i = 0; i < inputPattern.length; i++) {
             if (network.verify(inputPattern[i], null, verifyFunc)) {
                 successCount++;
             } else {
                 failCount++;
+                resultOk = false;
                 if (assertIfFailed) {
                     assertTrue("Verification of learned data. Input is " + Utils.intArrayToString(inputPattern[i]) + " Output should be " + Utils.intArrayToString(outputPattern[i]) + " but is " + Utils.intArrayToString(network.getOutputValues()), false);
                 }
             }
         }
+        return resultOk;
     }
 
-    protected void runTest_Optimize() {
+    protected int runTest_Optimize() {
         LOG.debug("---------- PHASE 3: Optimizing ---------- ");
-        network.optimizeAll();
-        LOG.info(name + ": optimized " + network.toString() + "\n" + network.dumpNetworkToString(false));
+        int count = network.optimizeAll();
+        LOG.info(name + ": optimized " + count + " gates in " + network.toString() + ((count > 0) ? ("\n" + network.dumpNetworkToString(false)) : ""));
+        return count;
     }
 
     protected boolean runTest_Stop() {

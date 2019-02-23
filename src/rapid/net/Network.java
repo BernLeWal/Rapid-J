@@ -145,7 +145,7 @@ public class Network extends Layer {
     }
 
     public void toGraphML(String filename, boolean showValues) {
-        GraphMLWriter gml = new GraphMLWriter(filename);
+        GraphMLWriter gml = new GraphMLWriter("logs/" + filename);
         gml.open();
         gml.beginGraph(name, true);
         // Data for Nodes
@@ -392,7 +392,7 @@ public class Network extends Layer {
     }
 
     private Gate insertAndGate(Gate outputOrGate) {
-        Gate andGate = Gate.createAndGate(this, name + ".AndGate" + (nextGateId++), cycles);
+        Gate andGate = Gate.createAndGate(this, "AndGate" + (nextGateId++), cycles);
 
         Ref<Float> sumWeight = new Ref<>(0.0f);
         for (Portable input : inputs) {

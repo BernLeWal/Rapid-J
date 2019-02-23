@@ -21,7 +21,7 @@ public class FuzzyTest extends TestBase {
     public static void main(String[] args) {
         FuzzyTest test = new FuzzyTest();
         test.setUp();
-        test.addTestAplusA(); 
+        test.addTestAplusA();
         test.tearDown();
     }
 
@@ -103,7 +103,7 @@ public class FuzzyTest extends TestBase {
         runTest_Stop();
         network.toGraphML("logs/" + name + ".graphml", false);
 
-        assertEquals("Number of gates in the hidden-layer.", sectors-1, network.getGates().size());
+        assertEquals("Number of gates in the hidden-layer.", sectors - 1, network.getGates().size());
 
         LOG.debug("========== Finished: " + name + " ==========");
     }
@@ -193,14 +193,14 @@ public class FuzzyTest extends TestBase {
 
         addTest("A+A", verifyInputPattern2, verifyOutputPattern2);
     }
-    
+
     @Test
     public void addTestAplusInvA() {    // A+(1-A) = 1
         int[][] verifyInputPattern2 = new int[MAX_VALUE + 1][2];
         generateLinearPattern(verifyInputPattern2, 0, MAX_VALUE, 1, 0);
         generateLinearPattern(verifyInputPattern2, MAX_VALUE, 0, 1, 1);
         int[][] verifyOutputPattern2 = generateConstantPattern(0, MAX_VALUE, MAX_VALUE);
-        
+
         addTest("A-A", verifyInputPattern2, verifyOutputPattern2);
     }
 
@@ -240,6 +240,37 @@ public class FuzzyTest extends TestBase {
         assertEquals("Number of gates in the hidden-layer.", 2, network.getGates().size());
 
         LOG.debug("========== Finished: " + name + " ==========");
+    }
+
+    @Test
+    public void commonANDTest() {
+        this.name = "FuzzyCommonANDTest";
+        LOG.info("========== Started: " + name + " ==========");
+
+        LOG.debug("---------- PHASE 0: Initialisation ---------- ");
+        int cycle = network.getCycles();
+        network.addInput(PortFactory.createFuzzy("In1", 1, cycle));
+        network.addInput(PortFactory.createFuzzy("In2", 1, cycle));
+        network.addInput(PortFactory.createFuzzy("In3", 1, cycle));
+        network.addInput(PortFactory.createFuzzy("In4", 1, cycle));
+        network.addOutput(PortFactory.createOneHot("Out", 1, cycle));
+
+        // create test-patterns and result-putterns
+        int[][] learnInputPattern = new int[][]{{1, 1, 1, 0}, {0, 1, 1, 1}};
+        int[][] learnOutputPattern = new int[][]{{0}, {1}};
+
+        // perform the tests
+        runTest_Start();
+        runTest_Learn(learnInputPattern, learnOutputPattern);
+        runTest_Verify(learnInputPattern, learnOutputPattern, false);
+        runTest_Optimize();
+        runTest_Verify(learnInputPattern, learnOutputPattern, true);
+        runTest_Stop();
+        
+        network.toGraphML("logs/" + name + ".graphml", false);
+        // TODO assertEquals("Number of gates in the hidden-layer.", 3, network.getGates().size());
+
+        LOG.debug("========== Finished: " + name + " ==========");        
     }
 
 }

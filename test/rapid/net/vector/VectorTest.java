@@ -76,7 +76,7 @@ public class VectorTest extends TestBase {
 
         // perform the tests
         runTest(learnInputPattern, learnOutputPattern);
-        network.toGraphML("logs/" + name + ".graphml", false);
+        network.toGraphML(name + ".graphml", false);
 
         //assertEquals("Number of gates in the hidden-layer.", sectors - 1, network.getGates().size());
         LOG.debug("========== Finished: " + name + " ==========");

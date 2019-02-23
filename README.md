@@ -8,6 +8,7 @@ The interconnected neurons implement algebrahic-functions for evaluating the wei
 * network/graph is built-up during learning
 * needs only mimimum of learning-data
 * network/graph is self optimizing
+* neuronal-network function is transparent; GraphML export
 * (neurons are working independently (the final goal) )
 * (data/information is passing "as waves" through the network/graph)
 
