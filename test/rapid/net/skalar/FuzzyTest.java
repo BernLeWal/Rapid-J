@@ -21,7 +21,7 @@ public class FuzzyTest extends TestBase {
     public static void main(String[] args) {
         FuzzyTest test = new FuzzyTest();
         test.setUp();
-        test.addTestAplusA();
+        test.commonANDTest();
         test.tearDown();
     }
 
@@ -242,7 +242,7 @@ public class FuzzyTest extends TestBase {
         LOG.debug("========== Finished: " + name + " ==========");
     }
 
-    //TODO @Test
+    @Test
     public void commonANDTest() {
         this.name = "FuzzyCommonANDTest";
         LOG.info("========== Started: " + name + " ==========");

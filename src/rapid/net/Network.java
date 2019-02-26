@@ -25,6 +25,7 @@ public class Network extends Layer {
 
     private static final Logger LOG = LogManager.getLogger(Network.class.toString());
 
+    private float precision = 0.001f;   // uncertainty of 0,1%
     private final ArrayList<Portable> inputs;
     private final ArrayList<Portable> outputs;
 
@@ -39,6 +40,14 @@ public class Network extends Layer {
         this.cycles = 0;
 
         LOG.debug("ctor " + name);
+    }
+
+    public float getPrecision() {
+        return precision;
+    }
+
+    public void setPrecision(float precision) {
+        this.precision = precision;
     }
 
     public <T extends Portable> T addInput(T port) {
@@ -157,7 +166,7 @@ public class Network extends Layer {
         gml.defEdgeData(GraphMLWriter.EDGEDATA_NAME, GraphMLWriter.EDGEDATA_NAME, GraphMLWriter.TYPE_STRING);
         gml.defEdgeData(GraphMLWriter.DATA_WEIGHT, GraphMLWriter.DATA_WEIGHT, GraphMLWriter.TYPE_FLOAT);
         gml.defEdgeData(GraphMLWriter.DATA_BIAS, GraphMLWriter.DATA_BIAS, GraphMLWriter.TYPE_FLOAT);
-        
+
         if (showValues) {
             gml.defNodeData(GraphMLWriter.DATA_VALUE, GraphMLWriter.DATA_VALUE, GraphMLWriter.TYPE_FLOAT);
             gml.defEdgeData(GraphMLWriter.EDGEDATA_VALUE, GraphMLWriter.EDGEDATA_VALUE, GraphMLWriter.TYPE_FLOAT);
@@ -291,11 +300,49 @@ public class Network extends Layer {
         return getOutputValues();
     }
 
-    public void learn(int[] inputPattern, int[] outputPattern, BiConsumer<Queue<Gate>, Integer> setterFunc, boolean optimize) {
+    public boolean learn(int[] inputPattern, int[] outputPattern, BiConsumer<Queue<Gate>, Integer> setterFunc, boolean optimize) {
         // fill network with current values
         query(inputPattern, setterFunc);
         // insert/learn (and automatically optimizeGate) result-pattern
-        insert(outputPattern, optimize);
+        if (insert(outputPattern, optimize) > 0) {
+            // verify if the learned input-pattern already results to the output-pattern
+            int[] outputValues = query(inputPattern, setterFunc);
+            for (int j = 0; j < outputValues.length; j++) {
+                final int sollValue = outputPattern[j];
+                final int istValue = outputValues[j];
+                if (sollValue != istValue) {
+                    Portable output = outputs.get(j);
+                    LOG.debug("ATTENTION - Verification of data failed! Input=" + Utils.intArrayToString(inputPattern) + " " + ((Layer) output).name + " should be " + sollValue + " but is " + istValue);
+                    LOG.debug(toString() + "\n" + dumpNetworkToString(true));
+                    return correct(output, sollValue, istValue);
+                }
+            }
+            return true;
+        } else {
+            return false;   // there was nothing new to learn
+        }
+    }
+
+    private boolean correct(Portable output, final int sollValue, final int istValue) {
+        if (output instanceof Port) {
+            Port outputPort = (Port)output;
+            List<Gate> sollGates = outputPort.getGatesByValue(sollValue);
+            List<Gate> istGates = outputPort.getGatesByValue(istValue);
+            if( sollGates.size()==1 && istGates.size()==1 ) {
+                Gate sollGate = sollGates.get(0);
+                float sollResult = sollGate.getResult(cycles);
+                float istResult = istGates.get(0).getResult(cycles);
+                float correction = (istResult / sollResult) * (1.f + 10.f*precision);
+                Iterator it = sollGate.getIns().iterator();
+                while( it.hasNext() ) {
+                    Edge edge = (Edge)it.next();
+                    edge.setWeight( edge.getWeight()*correction );
+                }
+                LOG.info("Corrected weight-values for inputs to " + output.name() + " by factor " + correction);
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean verify(int[] inputValues, int[] outputValues, BiConsumer<Queue<Gate>, Integer> setterFunc) {
@@ -304,7 +351,7 @@ public class Network extends Layer {
         boolean success = true;
         for (int j = 0; j < outputValues.length; j++) {
             if (outputValues[j] != mlOutputValues[j]) {
-                LOG.error("FAILED - Verification of data failed! Input=" + Utils.intArrayToString(inputValues) + " " + ((Layer) outputs.get(j)).name + " " + outputValues[j] + "!=" + mlOutputValues[j]);
+                LOG.error("FAILED - Verification of data failed! Input=" + Utils.intArrayToString(inputValues) + " " + ((Layer) outputs.get(j)).name + " should be " + outputValues[j] + " but is " + mlOutputValues[j]);
                 LOG.info(toString() + "\n" + dumpNetworkToString(true));
                 success = false;
             }
@@ -347,18 +394,20 @@ public class Network extends Layer {
         return count;
     }
 
-    private void insert(int[] outputValues, boolean optimize) {
+    private int insert(int[] outputValues, boolean optimize) {
         LOG.debug(toString() + " insert() started...");
         int valueIndex = 0;
         Iterator<Portable> itOutput = outputs.iterator();
+        Ref<Integer> insertedGates = new Ref<>(0);
         while (valueIndex < outputValues.length && itOutput.hasNext()) {
-            valueIndex = insert_doOutput(itOutput.next(), outputValues, valueIndex, optimize);
+            valueIndex = insert_doOutput(itOutput.next(), outputValues, valueIndex, optimize, insertedGates);
         }
         LOG.debug(toString() + "\n" + dumpNetworkToString(false));
-        LOG.debug(toString() + " insert() finished.");
+        LOG.debug(toString() + " insert() finished. added gates=" + insertedGates.value);
+        return insertedGates.value;
     }
 
-    private int insert_doOutput(Portable output, int[] outputValues, int valueIndex, boolean optimize) {
+    private int insert_doOutput(Portable output, int[] outputValues, int valueIndex, boolean optimize, Ref<Integer> insertedGates) {
         if (output instanceof Port) {
             Port outputPort = (Port) output;
             int outputValue = outputValues[valueIndex];
@@ -367,6 +416,7 @@ public class Network extends Layer {
                 for (Gate outputGate : outputGates) {
                     Gate andGate = insertAndGate(outputGate);
                     if (andGate != null) {
+                        insertedGates.value++;
                         if (outputPort instanceof FuzzyPort) {
                             final Edge edge = andGate.getOuts().get(0);
                             final float fuzzyOutputValue = ((FuzzyPort) outputPort).calcFuzzyFromValue(outputValue);
@@ -385,7 +435,7 @@ public class Network extends Layer {
         if (output.getChildren() != null) {
             Iterator<Portable> itChild = output.getChildren().iterator();
             while (itChild.hasNext()) {
-                valueIndex = insert_doOutput(itChild.next(), outputValues, valueIndex, optimize);
+                valueIndex = insert_doOutput(itChild.next(), outputValues, valueIndex, optimize, insertedGates);
             }
         }
         return valueIndex;

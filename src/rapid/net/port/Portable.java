@@ -4,7 +4,6 @@ package rapid.net.port;
 import java.util.List;
 import java.util.Queue;
 import rapid.net.Gate;
-import rapid.util.GraphMLWriter;
 import rapid.util.Ref;
 
 public interface Portable {
