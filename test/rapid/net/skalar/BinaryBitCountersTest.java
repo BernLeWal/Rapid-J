@@ -27,7 +27,7 @@ public class BinaryBitCountersTest extends TestBase {
     public static void main(String[] args) {
         BinaryBitCountersTest test = new BinaryBitCountersTest();
         test.setUp();
-        test.test4BitCounting2Bin();
+//        test.test4BitCounting2Bin();
         test.tearDown();
     }
 
@@ -35,7 +35,7 @@ public class BinaryBitCountersTest extends TestBase {
     public void test1BitCounting() {
         bitCountingTest(1, network.addInput(PortFactory.createBinary("In", 1, network.getCycles())), false);
     }
-
+/*
     @Test
     public void test2BitCounting() {
         bitCountingTest(2, network.addInput(PortFactory.createBinary("In", 2, network.getCycles())), false);
@@ -110,7 +110,7 @@ public class BinaryBitCountersTest extends TestBase {
     public void test8BitCounting2Bin() {
         bitCountingTest(8, network.addInput(PortFactory.createBinary("In", 8, network.getCycles())), true);
     }
-
+*/
     private void bitCountingTest(int bits, Layer input, boolean binaryOut) {
         name = ("Binary" + bits + "BitCounter" + (binaryOut ? "BinaryOut" : ""));
         LOG.info("========== Started: " + name + " ==========");
